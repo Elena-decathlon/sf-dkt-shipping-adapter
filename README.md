@@ -1,0 +1,1 @@
+First prototype for the shipping adapter
