@@ -1,0 +1,39 @@
+{
+  "service_code": {
+    "Next_Day_Air": "01",
+    "2nd_Day_Air": "02",
+    "Ground": "03",
+    "3 Day Select": "12",
+    "Next Day Air Saver": "13",
+    "UPS Next Day Air Early": "14",
+    "2nd Day Air A.M.": "59",
+
+    "UPS_SurePost_Less_than_1LB":"92",
+    "UPS_SurePost_1LB_or_greater":"93",
+    "UPS_SurePost_BPM":"94",
+    "UPS_SurePost_Media_Mail":"95",
+
+    "Worldwide Express":"07",
+    "Worldwide Expedited":"08",
+    "Standard":"11",
+    "Worldwide Express Plus":"54",
+    "Saver":"65",
+    "UPS Worldwide Express Freight":"96",
+    "UPS Worldwide Express Freight Midday":"71"
+
+  },
+  "packing_code": {
+    "UNKNOWN": "00",
+    "UPS Letter": "01",
+    "Package": "02",
+    "Tube": "03",
+    "Pak": "04",
+    "Express Box": "21",
+    "25KG Box": "24",
+    "10KG Box": "25",
+    "Pallet": "30",
+    "Small Express Box": "2a",
+    "Medium Express Box": "2b",
+    "Large Express Box": "2c"
+  }
+}
