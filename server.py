@@ -1,7 +1,12 @@
 import http.server
+import os
 import socketserver
 
-PORT = 80
+from dotenv import load_dotenv
+
+load_dotenv()
+
+PORT = int(os.getenv("PORT"))
 Handler = http.server.SimpleHTTPRequestHandler
 
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
