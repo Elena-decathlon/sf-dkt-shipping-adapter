@@ -2,6 +2,7 @@ from flask import Flask, jsonify, abort, make_response, request
 
 app = Flask(__name__)
 
+''' Test '''
 shipment_options = [ 
     {
         'id': 1,
@@ -17,7 +18,13 @@ shipment_options = [
     }
 ]
 
+''' Logging headers and body before request'''
+@app.before_request
+def log_request_info():
+    app.logger.debug('Header: %s', request.headers)
+    app.logger.debug('Body: %s', request.get_data())
 
+''' GET method '''
 @app.route('/api/v1/shipping_offers/<int:shipment_id>', methods=['GET'])
 def get_shipping_offers(shipment_id):
     shipping_offer = [shipment for shipment in shipment_options if shipment['id'] == shipment_id ]
@@ -25,6 +32,7 @@ def get_shipping_offers(shipment_id):
         abort(404)
     return(jsonify({"shipment": shipment_options[0]}))
 
+''' POST method '''
 @app.route('/api/v1/shipping_offers', methods=['POST'])
 def create_shipment():
     if not request.json or not "title" in request.json:
@@ -39,7 +47,7 @@ def create_shipment():
     return(jsonify({"shipment": shipment_options}), 201)
 
 
-
+''' Error handler '''
 @app.errorhandler(404)
 def not_found(error):
     return(make_response(jsonify({"error": "Not found"}),))
