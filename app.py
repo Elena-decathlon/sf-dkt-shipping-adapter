@@ -44,6 +44,7 @@ def create_shipment():
         'done': 'false'
         }
     shipment_options.append(shipment_option)
+    print(shipment_option)
     return(jsonify({"shipment": shipment_options}), 201)
 
 
