@@ -89,10 +89,6 @@ def create_shipment():
                 },
             'request_id': str(float(shipment_options[-1]['request_id']) + 0.001),
             'shipping_address': request.json.get('shipping_address', '')
-#            'shipping_address': request.json['shipping_address'],
-#        'description': request.json.get('description', ""),
-#        'bag': request.json.get('bag', ""),
-#            }
         }
     shipment_options.append(shipment_option)
     print(shipment_option)
