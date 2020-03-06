@@ -4,18 +4,6 @@ app = Flask(__name__)
 
 ''' Test '''
 shipment_options = [ 
- #   {
- #       'id': 1,
- #       'title': u"shipping option number 1",
- #       'description': 'free by air',
- #       'done': 'False'
- #   },
- #   {
- #       'id': 2,
- #       'title': u"shipping option number 2",
- #       'description': 'free by water',
- #       'done':'False'
- #   }
     {
         "request_id": "1111.111",
         "bag": {
@@ -74,7 +62,6 @@ def get_shipping_offers(request_id):
 
 @app.route('/api/v1/shipping_offers', methods=['POST'])
 def create_shipment():
-#    if not request.json or not "title" in request.json:
     if not request.json or not "shipping_address" in request.json:
         abort(400)
     shipment_option = {
@@ -102,22 +89,25 @@ def create_shipment():
                 },
             'request_id': str(float(shipment_options[-1]['request_id']) + 0.001),
             'shipping_address': request.json.get('shipping_address', '')
-#{
-#                'address_line_1': '',
-#                'address_line_2': '',
-#                'city': '',
-#                'country_code': '',
-#                'zip_code': 0
 #            'shipping_address': request.json['shipping_address'],
 #        'description': request.json.get('description', ""),
 #        'bag': request.json.get('bag', ""),
 #            }
         }
     shipment_options.append(shipment_option)
-    print("LOOK DOWN HERE")
-    print(shipment_options)
+    print(shipment_option)
     return(jsonify({"shipment": shipment_options}), 201)
 
+''' DELETE method '''
+
+
+@app.route('/api/v1/shipping_offers/<request_id>', methods=['DELETE'])
+def delete_shipment(request_id):
+    shipping_offer = [shipment for shipment in shipment_options if shipment['request_id'] == str(request_id)]
+    if len(shipping_offer) == 0:
+        abort(404)
+    shipment_options.remove(shipping_offer[0])
+    return(jsonify({'result': True}))
 
 ''' Error handler '''
 
