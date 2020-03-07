@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, abort, make_response, request
+import json
 
 app = Flask(__name__)
 
@@ -63,7 +64,10 @@ def get_shipping_offers(request_id):
 @app.route('/api/v1/shipping_offers', methods=['POST'])
 def create_shipment():
     if not request.json or not "shipping_address" in request.json:
-        abort(400)
+ #       abort(400)
+        with open("POST_error.json") as f:
+            data = json.load(f)
+        return(jsonify(data), 400)
     shipment_option = {
             'bag': {
                 'products': [
@@ -90,9 +94,14 @@ def create_shipment():
             'request_id': str(float(shipment_options[-1]['request_id']) + 0.001),
             'shipping_address': request.json.get('shipping_address', '')
         }
+#    with open("POST_request.json") as f:
+#        shipment_option = json.load(f)
     shipment_options.append(shipment_option)
     print(shipment_option)
-    return(jsonify({"shipment": shipment_options}), 201)
+    with open("POST_response.json") as f:
+        data = json.load(f)
+#    return(jsonify({"shipment": shipment_options}), 201)
+    return(jsonify(data), 201)
 
 ''' DELETE method '''
 
