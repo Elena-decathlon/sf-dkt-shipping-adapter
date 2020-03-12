@@ -106,7 +106,9 @@ def post_shipping_offers():
 #        shipment_option = json.load(f)
     shipment_options.append(shipment_option)
     print(shipment_option)
-    with open("shipping_offers_201.json") as f:
+#    with open("shipping_offers_201.json") as f:
+#        data = json.load(f)
+    with open("shipping_offers_free_shipping.json") as f:
         data = json.load(f)
     return(jsonify(data), 201)
 

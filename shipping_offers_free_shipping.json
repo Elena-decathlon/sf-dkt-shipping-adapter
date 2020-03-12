@@ -1,0 +1,14 @@
+{
+  "properties": {
+    "tracking_code": "DKT001",
+    "label_url": "https://labelurl.com/label1",
+    "tracking_url": "https://myshipmentproviderwebsite.com/tracking1",
+    "return_tracking_code": "RETURN001",
+    "return_label_url": "https://returnlabelurl.com/return001",
+    "return_tracking_url": "https://returntrackingurl.com/returntracking001"
+    },
+    "cost": {
+        "price" : 0.00,
+        "currency" : "USD"
+	} 
+}
