@@ -1,7 +1,14 @@
-from flask import Flask, jsonify, abort, make_response, request
 import json
+import os
+
+from dotenv import load_dotenv
+from flask import Flask, jsonify, abort, make_response, request
+from flask_httpauth import HTTPTokenAuth
+
+#load_dotenv()
 
 app = Flask(__name__)
+#app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 ''' Test '''
 shipment_options = [ 
@@ -63,11 +70,13 @@ def get_shipping_offers(request_id):
 
 @app.route('/api/v1/shipping_offers', methods=['POST'])
 def create_shipment():
+
     if not request.json or not "shipping_address" in request.json:
  #       abort(400)
         with open("POST_error.json") as f:
             data = json.load(f)
         return(jsonify(data), 400)
+    print(request.json)
     shipment_option = {
             'bag': {
                 'products': [
