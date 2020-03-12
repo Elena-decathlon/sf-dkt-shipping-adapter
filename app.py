@@ -76,7 +76,7 @@ def create_shipment():
         with open("POST_error.json") as f:
             data = json.load(f)
         return(jsonify(data), 400)
-    print(request.json)
+    print(f"REQUEST: {request.json}")
     shipment_option = {
             'bag': {
                 'products': [
