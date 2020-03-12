@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Error returned from the adapter.",
+  "description": "Error returned from the adapter.",
+  "required": [
+    "data",
+    "message",
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "description": "List of possible error types in the payload received from the adapter.",
+      "type": "string",
+      "enum": [
+        "carrier_unavailable",
+        "customs_error",
+        "delivery_validation_error",
+        "invalid_delivery_window",
+        "label_creation_pending",
+        "sender_address_error",
+        "sender_address_not_serviced",
+        "shipping_address_error",
+        "shipping_address_not_serviced",
+        "timeout",
+        "unexpected_error",
+        "carrier_account_configuration_error"
+      ]
+    }
+  },
+  "message": {
+    "description": "The error reason.",
+    "type": [
+      "string",
+      "null"
+    ]
+  },
+  "data": {
+    "description": "Object containing the error information.",
+    "anyOf": [
+      {
+        "type": "null"
+      },
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "description": "Error raised when an ITN property is missing or wrong, inside a request sent to the adapter.",
+        "type": "object",
+        "required": [
+          "reason"
+        ],
+        "properties": {
+          "reason": {
+            "description": "Identifies if the error is related to a missing ITN or a wrong ITN.",
+            "type": "string",
+            "enum": [
+              "missing_itn",
+              "wrong_itn"
+            ]
+          }
+        }
+      },
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "description": "Error raised when the data sent to the adapter is incorrect. Typical errors include: wrong format, data not found, missing parameters, or invalid data.",
+        "type": "object",
+        "properties": {
+          "type": "array",
+          "description": "List of problematic fields.",
+          "items": {
+            "type": "object",
+            "description": "The property name matches the name of the invalid field.",
+            "patternProperties": {
+              "^.*$": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

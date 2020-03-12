@@ -1,0 +1,351 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Request sent to a shipping adapter to book a time slot offered by a shipping provider.",
+  "type": "object",
+  "required": [
+    "rate",
+    "carrier_code",
+    "external_order_id",
+    "booking_method",
+    "sender_address",
+    "shipping_address",
+    "items"
+  ],
+  "properties": {
+    "offer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier of the offer."
+    },
+    "rate": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Identifier of the rate. For example, FEDEX_GROUND, DHL_WUNSCHZEIT, etc."
+    },
+    "carrier_code": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Identifier of the shipping carrier. For example, FEDEX, DELIV, DHL_PAKET, etc."
+    },
+    "external_order_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "External identifier of the order to be shipped."
+    },
+    "booking_method": {
+      "type": "string",
+      "description": "Type of shipments to book.",
+      "enum": [
+        "only_shipping",
+        "only_return",
+        "shipping_and_return"
+      ]
+    },
+    "sender_address": {
+      "description": "Address of the sender.",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "first_name",
+        "last_name",
+        "country_code",
+        "city",
+        "address_line_1",
+        "phone"
+      ],
+      "extends": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "description": "Base address object",
+        "type": "object",
+        "properties": {
+          "country_code": {
+            "description": "Country code for this address. Must be <a href='http://www.iso.org/iso/country_codes.htm'>ISO-3166 reference</a>",
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "zip_code": {
+            "type": "string",
+            "maxLength": 32
+          },
+          "state": {
+            "type": "string"
+          },
+          "address_line_1": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "address_line_2": {
+            "type": "string",
+            "maxLength": 256
+          }
+        }
+      },
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "description": "First name of the address.",
+          "maxLength": 256
+        },
+        "last_name": {
+          "type": "string",
+          "description": "Last name of the address.",
+          "maxLength": 256
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address.",
+          "maxLength": 256
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number.",
+          "maxLength": 256
+        }
+      }
+    },
+    "shipping_address": {
+      "description": "Address of the consumer.",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "first_name",
+        "last_name",
+        "country_code",
+        "city",
+        "address_line_1",
+        "phone"
+      ],
+      "extends": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "description": "Base address object",
+        "type": "object",
+        "properties": {
+          "country_code": {
+            "description": "Country code for this address. Must be <a href='http://www.iso.org/iso/country_codes.htm'>ISO-3166 reference</a>",
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "zip_code": {
+            "type": "string",
+            "maxLength": 32
+          },
+          "state": {
+            "type": "string"
+          },
+          "address_line_1": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "address_line_2": {
+            "type": "string",
+            "maxLength": 256
+          }
+        }
+      },
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "description": "First name of the address.",
+          "maxLength": 256
+        },
+        "last_name": {
+          "type": "string",
+          "description": "Last name of the address.",
+          "maxLength": 256
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address.",
+          "maxLength": 256
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number.",
+          "maxLength": 256
+        }
+      }
+    },
+    "package_option": {
+      "description": "Specifications of the package.",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "weight"
+      ],
+      "properties": {
+        "weight": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "number",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "description": "Shipping weight of the package without its content."
+            },
+            "unit": {
+              "type": "string",
+              "enum": [
+                "lb",
+                "oz",
+                "kg",
+                "g"
+              ],
+              "description": "Unit of the shipping weight."
+            }
+          }
+        },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "length": {
+              "type": "number",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "description": "Length of the package."
+            },
+            "width": {
+              "type": "number",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "description": "Width of the package."
+            },
+            "height": {
+              "type": "number",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "description": "Height of the package."
+            },
+            "unit": {
+              "type": "string",
+              "description": "Unit of all the dimensions of the package.",
+              "enum": [
+                "mm",
+                "cm",
+                "m",
+                "in",
+                "ft"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "description": "List of the identifiers of the products contained in the package.",
+      "items": {
+        "description": "Description of the item.",
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "description": "SKU, EAN, or EPC of the item being shipped.",
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "EPC": {
+                "type": "string"
+              },
+              "SKU": {
+                "type": "string"
+              },
+              "EAN": {
+                "type": "string"
+              }
+            }
+          },
+          "price": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Monetary value of one unit of the item."
+              },
+              "currency": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3,
+                "description": "Currency of the value in ISO-4217 alphabetic code."
+              }
+            }
+          },
+          "weight": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Weight of one unit of the item."
+              },
+              "unit": {
+                "type": "string",
+                "enum": [
+                  "lb",
+                  "oz",
+                  "kg",
+                  "g"
+                ],
+                "description": "Unit in which the weight is given."
+              }
+            }
+          },
+          "dimensions": {
+            "type": "object",
+            "properties": {
+              "height": {
+                "type": "number",
+                "minimum": 0,
+                "exclusiveMinimum": true,
+                "description": "Height of the product."
+              },
+              "length": {
+                "type": "number",
+                "minimum": 0,
+                "exclusiveMinimum": true,
+                "description": "Length of the product."
+              },
+              "unit": {
+                "type": "string",
+                "description": "Unit of all the dimensions of the product.",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ]
+              },
+              "width": {
+                "type": "number",
+                "minimum": 0,
+                "exclusiveMinimum": true,
+                "description": "Width of the product."
+              }
+            }
+          }
+        }
+      }
+    },
+    "demand_location_id": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Represents the location where the order was placed."
+    },
+    "fulfillment_node_id": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Represents the location from where the order will be shipped."
+    }
+  }
+}

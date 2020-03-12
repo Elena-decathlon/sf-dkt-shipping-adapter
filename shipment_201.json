@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Response from an adapter after NewStore sent a shipment booking request.",
+  "type": "object",
+  "required": [
+    "tracking_code",
+    "label_url"
+  ],
+  "properties": {
+    "tracking_code": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Tracking code of the shipment. The tracking code is used to identify the shipment. You can also use this property to track the return if only the return was requested from this shipping provider ('booking_method' property of the booking request)."
+    },
+    "label_url": {
+      "type": "string",
+      "description": "URL of the shipping label. Use this URL to retrieve and print the label. You can also use this property to point to the return label if only the return was requested from this shipping provider ('booking_method' property of the booking request)."
+    },
+    "tracking_url": {
+      "type": "string",
+      "description": "Tracking URL pointing to the shipment provider's website, displaying live information about the shipment's location. You also can use this property to point to the return's location if only the return was requested from this shipping provider ('booking_method' property of the booking request)."
+    },
+    "return_tracking_code": {
+      "type": "string",
+      "description": "The tracking code of the return. Use this property only if the shipping and the return of the package are requested to the same shipping provider ('booking_method' property of the booking request), otherwise, use the 'tracking_code' property."
+    },
+    "return_label_url": {
+      "type": "string",
+      "description": "URL of the return label. Use this URL to retrieve and print the label. Use this property only if the shipping and the return of the package are requested to the same shipping provider ('booking_method' property of the booking request), otherwise, use the 'label_url' property."
+    },
+    "return_tracking_url": {
+      "type": "string",
+      "description": "Tracking URL pointing to the return provider's website, displaying live information about the return's location. Use this property only if the shipping and the return of the package are requested to the same shipping provider ('booking_method' property of the booking request), otherwise, use the 'tracking_url' property."
+    },
+    "cost": {
+      "description": "Estimate of the cost of the delivery (and potential return) charged by the shipping provider.",
+      "type": "object",
+      "required": [
+        "price",
+        "currency"
+      ],
+      "properties": {
+        "price": {
+          "description": "Monetary value for shipping (and potential return) and handling.",
+          "type": "number"
+        },
+        "currency": {
+          "description": "Currency of the price of this shipment (and potential return), in ISO 4217 alphabetic code.",
+          "type": "string",
+          "maxLength": 3,
+          "minLength": 3
+        }
+      }
+    }
+  }
+}
