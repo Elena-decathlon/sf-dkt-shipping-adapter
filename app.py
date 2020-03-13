@@ -5,46 +5,12 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, abort, make_response, request
 from flask_httpauth import HTTPTokenAuth
 
-#load_dotenv()
+# load_dotenv()
 
 app = Flask(__name__)
-#app.secret_key = os.getenv("FLASK_SECRET_KEY")
+# app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 ''' Test '''
-'''shipment_options = [
-    {
-        "request_id": "1111.111",
-        "bag": {
-            "products": [
-                {
-                    "product_id": "200121",
-                    "quantity": 1,
-                    "price": {
-                        "amount": 1.2,
-                        "currency": "USD"
-                        },
-                    "weight": {
-                        "value": 1,
-                        "unit": "lb"
-                        },
-                    "dimensions": {
-                        "length": 5,
-                        "width": 5,
-                        "height": 5,
-                        "unit": "in"
-                        }
-                    }
-                ]
-            },
-        "shipping_address": {
-            "address_line_1": "999 Yawkey Way",
-            "address_line_2": "999nd floor",
-            "city": "Boston",
-            "country_code": "US",
-            "zip_code": "20038"
-            }
-        }
-    ]'''
 
 shipment_options = [
     {
@@ -59,15 +25,15 @@ shipment_options = [
             'address_line_1': '2415 3rd Street',
             'address_line_2': '',
             'phone': '555 5555 555'
-            }, 
+            },
         'shipping_address': {
-            'country_code': 'US', 
+            'country_code': 'US',
             'zip_code': '94124',
             'address_line_1': '5880 3rd St',
             'city': 'San Francisco',
             'state': 'CA',
             'phone': '5555555555'
-            }, 
+            },
         'fulfillment_node_id': 'WHOA002',
         'ready_by': '2020-03-12T23:32:16.125862',
         'service_level': 'UPS_SECOND_DAY_AIR',
@@ -92,6 +58,63 @@ shipment_options = [
                 'quantity': 1
                 }
             ]
+        }
+    ]
+
+shipments = [
+    {
+        'request_id': '2111.111',
+        'rate': 'FEDEX_GROUND',
+        'demand_location_id': 'US01',
+        'fulfillment_node_id': 'US02',
+        'carrier_code': 'FEDEX',
+        'external_order_id': '981475723',
+        'booking_method': 'shipping_and_return',
+        'sender_address': {
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'phone': '202-555-0186',
+            'country_code': 'US',
+            'city': 'New York',
+            'zip_code': '10001',
+            'address_line_1': '2635 Simons Hollow Road',
+            'state': 'New York'
+            },
+        'shipping_address': {
+            'first_name': 'James',
+            'last_name': 'Navarrete',
+            'phone': '520-466-2640',
+            'country_code': 'US',
+            'city': 'Arizona City',
+            'zip_code': '85223',
+            'address_line_1': '2035 Parkway Drive',
+            'state': 'AZ'
+            },
+        'items': [
+                        {
+                            'identifier': {
+                                'EPC': '32WE4335'
+                                }
+                            },
+                        {
+                            'identifier': {
+                                'EPC': '473UC75279'
+                                },
+                            'price': {
+                                'amount': 15.4
+                                },
+                            'weight': {
+                                'amount': 350,
+                                'unit': 'g'
+                                }
+                            }
+                        ],
+        'package_option': {
+                        'weight': {
+                            'amount': 2.5,
+                            'unit': 'lb'
+                            }
+                        }
         }
     ]
 
@@ -125,40 +148,14 @@ def post_shipping_offers():
         with open("shipping_offers_400.json") as f:
             data = json.load(f)
         return(jsonify(data), 400)
-    '''    shipment_option = {
-            'bag': {
-                'products': [
-                    {
-                        'dimentions': {
-                            'height': 0,
-                            'lenght': 0,
-                            'unit': '',
-                            'width': 0
-                            },
-                        "price": {
-                            "amount": 0.0,
-                            "currency": ''
-                            },
-                        'product_id': 0,
-                        'quantity': 0,
-                        'weight': {
-                            'unit': '',
-                            'value': 0
-                            }
-                        }
-                    ]
-                },
-            'request_id': str(float(shipment_options[-1]['request_id']) + 0.001),
-            'shipping_address': request.json.get('shipping_address', '')
-        }'''
-    shipment_option =  {
+    shipment_option = {
         'request_id': str(float(shipment_options[-1]['request_id']) + 0.001),
         'sender_address': request.json.get('sender_address', ''),
         'shipping_address': request.json.get('shipping_address', ''),
-        'fulfillment_node_id': request.json.get('fulfillment_node_id', ''), 
-        'ready_by': request.json.get('ready_by', ''), 
-        'service_level': request.json.get('service_level', ''), 
-        'provider_rate': request.json.get('provider_rate', ''), 
+        'fulfillment_node_id': request.json.get('fulfillment_node_id', ''),
+        'ready_by': request.json.get('ready_by', ''),
+        'service_level': request.json.get('service_level', ''),
+        'provider_rate': request.json.get('provider_rate', ''),
         'deliverables': request.json.get('deliverables', '')
         }
 
@@ -183,37 +180,24 @@ def post_shipments():
         with open("shipment_400.json") as f:
             data = json.load(f)
         return(jsonify(data), 400)
-    shipment_option = {
-            'bag': {
-                'products': [
-                    {
-                        'dimentions': {
-                            'height': 0,
-                            'lenght': 0,
-                            'unit': '',
-                            'width': 0
-                            },
-                        "price": {
-                            "amount": 0.0,
-                            "currency": ''
-                            },
-                        'product_id': 0,
-                        'quantity': 0,
-                        'weight': {
-                            'unit': '',
-                            'value': 0
-                            }
-                        }
-
-                    ]
-                },
-            'request_id': str(float(shipment_options[-1]['request_id']) + 0.001),
-            'shipping_address': request.json.get('shipping_address', '')
+    shipment = {
+        'request_id': str(float(shipments[-1]['request_id']) + 0.001),
+        'shipping_address': request.json.get('shipping_address', ''),
+        'rate': request.json.get('rate', ''),
+        'demand_location_id': request.json.get('demand_location_id', ''),
+        'fulfillment_node_id': request.json.get('fulfillment_node_id', ''),
+        'carrier_code': request.json.get('carrier_code', ''),
+        'external_order_id': request.json.get('external_order_id', ''),
+        'booking_method': request.json.get('booking_method', ''),
+        'sender_address': request.json.get('sender_address', ''),
+        'items': request.json.get('items', ''),
+        'package_option': request.json.get('package_option', '')
         }
+
 #    with open("POST_request.json") as f:
 #        shipment_option = json.load(f)
-    shipment_options.append(shipment_option)
-    print(shipment_option)
+    shipment_options.append(shipment)
+    print(f"POST SHIPMENT OPTION {shipment}")
     with open("shipment_201.json") as f:
         data = json.load(f)
     return(jsonify(data), 201)
