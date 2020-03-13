@@ -1,11 +1,12 @@
 {
+	"title": "Shipping options with quotes and delivery estimates.",
 	"offer": "DKT001",
 	"provider_rate": "UPS_GROUND",
       	"service_level": "EXPRESS",
       	"delivery_estimate": {
 	 		     "starts_at": "2020-03-12T17:49:07.144226",
-      			     "ends_at": "2020-03-12T18:49:07.144226",
-			     "expires_at": "2020-03-12T18:49:07.144226"
+      			     "ends_at": "2020-03-13T18:49:07.144226",
+			     "expires_at": "2020-03-13T18:49:07.144226"
 			     },	      
 	"quote": {
 			"price": 0.00,
