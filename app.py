@@ -155,26 +155,17 @@ def post_shipping_offers():
         'request_id': str(float(shipment_options[-1]['request_id']) + 0.001),
         'sender_address': request.json.get('sender_address', ''),
         'shipping_address': request.json.get('shipping_address', ''),
-        'fulfillment_node_id': '', 
-        'ready_by': '', 
-        'service_level': '', 
-        'provider_rate': '', 
-        'deliverables': [{
-                'item': {
-                    'weight': request.json.get('weight', ''),
-                    'dimensions': request.json.get('dimentions', ''),
-                    'price': request.json.get('price'),
-                    }, 
-                'quantity': 0
-                }
-                         ]
+        'fulfillment_node_id': request.json.get('fulfillment_node_id', ''), 
+        'ready_by': request.json.get('ready_by', ''), 
+        'service_level': request.json.get('service_level', ''), 
+        'provider_rate': request.json.get('provider_rate', ''), 
+        'deliverables': request.json.get('deliverables', '')
         }
-
 
 #    with open("POST_request.json") as f:
 #        shipment_option = json.load(f)
     shipment_options.append(shipment_option)
-    print(shipment_option)
+    print(f"POST SHIPMENT OPTION {shipment_option}")
 #    with open("shipping_offers_201.json") as f:
 #        data = json.load(f)
     with open("shipping_offers_free_shipping.json") as f:
