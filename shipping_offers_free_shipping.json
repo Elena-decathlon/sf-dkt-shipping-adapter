@@ -1,14 +1,14 @@
 {
-  "properties": {
-    "tracking_code": "DKT001",
-    "label_url": "https://labelurl.com/label1",
-    "tracking_url": "https://myshipmentproviderwebsite.com/tracking1",
-    "return_tracking_code": "RETURN001",
-    "return_label_url": "https://returnlabelurl.com/return001",
-    "return_tracking_url": "https://returntrackingurl.com/returntracking001"
-    },
-    "cost": {
-        "price" : 0.00,
-        "currency" : "USD"
-	} 
-}
+	"offer": "DKT001",
+	"provider_rate": "UPS_GROUND",
+      	"service_level": "EXPRESS",
+      	"delivery_estimate": {
+	 		     "starts_at": "2020-03-12T17:49:07.144226",
+      			     "ends_at": "2020-03-12T18:49:07.144226",
+			     "expires_at": "2020-03-12T18:49:07.144226"
+			     },	      
+	"quote": {
+			"price": 0.00,
+        	 	"currency": "USD"
+          	  	}
+ }
