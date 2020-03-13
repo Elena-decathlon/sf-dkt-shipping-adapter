@@ -11,7 +11,7 @@ app = Flask(__name__)
 #app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 ''' Test '''
-shipment_options = [
+'''shipment_options = [
     {
         "request_id": "1111.111",
         "bag": {
@@ -43,6 +43,55 @@ shipment_options = [
             "country_code": "US",
             "zip_code": "20038"
             }
+        }
+    ]'''
+
+shipment_options = [
+    {
+        'request_id': '1111.111',
+        'sender_address': {
+            'first_name': 'Decathlon USA LLC',
+            'last_name': '',
+            'country_code': 'US',
+            'city': 'San Francisco',
+            'zip_code': '94107',
+            'state': 'CA',
+            'address_line_1': '2415 3rd Street',
+            'address_line_2': '',
+            'phone': '555 5555 555'
+            }, 
+        'shipping_address': {
+            'country_code': 'US', 
+            'zip_code': '94124',
+            'address_line_1': '5880 3rd St',
+            'city': 'San Francisco',
+            'state': 'CA',
+            'phone': '5555555555'
+            }, 
+        'fulfillment_node_id': 'WHOA002',
+        'ready_by': '2020-03-12T23:32:16.125862',
+        'service_level': 'UPS_SECOND_DAY_AIR',
+        'provider_rate': 'UPS Second Day Air',
+        'deliverables': [
+            {
+                'item': {
+                    'weight': {
+                        'amount': 184.0,
+                        'unit': 'g'
+                        },
+                    'dimensions': {
+                        'height': 3.15,
+                        'length': 9.84,
+                        'width': 5.12,
+                        'unit': 'in'
+                        },
+                    'price': {
+                        'amount': 9.99,
+                        'currency': 'USD'
+                        }},
+                'quantity': 1
+                }
+            ]
         }
     ]
 
@@ -76,7 +125,7 @@ def post_shipping_offers():
         with open("shipping_offers_400.json") as f:
             data = json.load(f)
         return(jsonify(data), 400)
-    shipment_option = {
+    '''    shipment_option = {
             'bag': {
                 'products': [
                     {
@@ -101,7 +150,27 @@ def post_shipping_offers():
                 },
             'request_id': str(float(shipment_options[-1]['request_id']) + 0.001),
             'shipping_address': request.json.get('shipping_address', '')
+        }'''
+    shipment_option =  {
+        'request_id': str(float(shipment_options[-1]['request_id']) + 0.001),
+        'sender_address': request.json.get('sender_address', ''),
+        'shipping_address': request.json.get('shipping_address', ''),
+        'fulfillment_node_id': '', 
+        'ready_by': '', 
+        'service_level': '', 
+        'provider_rate': '', 
+        'deliverables': [{
+                'item': {
+                    'weight': request.json.get('weight', ''),
+                    'dimensions': request.json.get('dimentions', ''),
+                    'price': request.json.get('price'),
+                    }, 
+                'quantity': 0
+                }
+                         ]
         }
+
+
 #    with open("POST_request.json") as f:
 #        shipment_option = json.load(f)
     shipment_options.append(shipment_option)
