@@ -1,7 +1,6 @@
 {
-	"title": "Shipping options with quotes and delivery estimates.",
 	"offer": "DKT001",
-	"provider_rate": "UPS_GROUND",
+	"provider_rate": "FEDEX_GROUND",
       	"service_level": "EXPRESS",
       	"delivery_estimate": {
 	 		     "starts_at": "2020-03-12T17:49:07.144226",
