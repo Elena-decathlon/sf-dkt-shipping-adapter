@@ -1,5 +1,6 @@
 import json
 import os
+import requests
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, abort, make_response, request
@@ -159,15 +160,51 @@ def post_shipping_offers():
         'deliverables': request.json.get('deliverables', '')
         }
 
-#    with open("POST_request.json") as f:
-#        shipment_option = json.load(f)
+    '''retrieving product dimentions for POST call to Shiphawk'''
+
+
+    test = {'deliverables': request.json.get('deliverables', '')}
+    test_d = test['deliverables']
+    zip = {'sender_address': request.json.get('sender_address', '')}
+    zip_o = zip['sender_address']['zip_code']
+    zip_d = {'shipping_address': request.json.get('shipping_address', '')}
+    zip_dd = zip_d['shipping_address']['zip_code']
+    length = test_d[0]['item']['dimensions']['length']
+    width = test_d[0]['item']['dimensions']['width']
+    height = test_d[0]['item']['dimensions']['height']
+    weight = test_d[0]['item']['weight']['amount']
+    value = test_d[0]['item']['price']['amount']
+
+
     shipment_options.append(shipment_option)
     print(f"POST SHIPMENT OPTION {shipment_option}")
-#    with open("shipping_offers_201.json") as f:
+    
+    ''' POST call to Shiphawk '''
+
+    url = 'https://sandbox.shiphawk.com/api/v4/rates'
+    headers = {'X-Api-Key': 'ff8d17e27fc4f27cd4108f1a0a848826'}
+    payload = {
+        "items": [
+            {
+                "type": "parcel",
+                "length": length,
+                "width" : width,
+                "height": height,
+                "weight": weight,
+                "value": value
+                }
+            ],
+        "origin_address":{ "zip": zip_o},
+        "destination_address": {"zip": zip_dd}
+        }
+    r = requests.post(url, headers=headers, json=payload)
+
+
+#    with open("shipping_offers_free_shipping.json") as f:
 #        data = json.load(f)
-    with open("shipping_offers_free_shipping.json") as f:
-        data = json.load(f)
-        print(f"RESPONSE WITH SHIPPING OFFER: {data}")
+#        print(f"RESPONSE WITH SHIPPING OFFER: {data}")
+    data = r.json()
+    print(f"RESPONSE WITH SHIPPING OFFER: {data}")
     return(jsonify(data), 201)
 
 ''' POST method / shipments'''
@@ -201,6 +238,7 @@ def post_shipments():
     print(f"POST SHIPMENT OPTION {shipment}")
     with open("shipment_test.json") as f:
         data = json.load(f)
+        print(f"RESPOSE WITH SHIPMENT {data}")
     return(jsonify(data), 201)
 
 ''' DELETE method '''
