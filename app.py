@@ -204,8 +204,42 @@ def post_shipping_offers():
 #        data = json.load(f)
 #        print(f"RESPONSE WITH SHIPPING OFFER: {data}")
     data = r.json()
+    new_data = []
+
+    '''retrieving shipping offer details from POST call to Shiphawk'''
+
+    rates = data['rates']
+    for d in rates:
+        offer = d['id']
+        provider_rate = d['rates_provider']
+        service_level = d['service_level']
+        starts_at = d['est_delivery_date']
+        ends_at = d['est_delivery_date']
+        expires_at = d['est_delivery_date']
+        price = d['price']
+        currency = d['currency_code']
+        resp = {
+            "offer": offer,
+            "provider_rate": provider_rate,
+            "service_level": service_level,
+            "delivery_estimate":
+                {
+                "starts_at": starts_at,
+                "ends_at": ends_at,
+                "expires_at": expires_at
+                },
+            "quote":
+                {
+                "price": price,
+                "currency": currency
+                }
+            }
+        print(f"OFFER {resp}")
+        new_data.append(resp)
+
+    print(f"NEW DATA {new_data}")
     print(f"RESPONSE WITH SHIPPING OFFER: {data}")
-    return(jsonify(data), 201)
+    return(jsonify(new_data), 201)
 
 ''' POST method / shipments'''
 
