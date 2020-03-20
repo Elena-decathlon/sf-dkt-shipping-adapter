@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Error from provider rates request",
+  "description": "Information related to the error.",
+  "type": "object",
+  "required": [
+    "request_id",
+    "error_code",
+    "messages"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Identifier received in request payload ('request_id' property).",
+      "minLength": 1
+    },
+    "error_code": {
+      "description": "Identifier of the error type.",
+      "type": "string"
+    },
+    "messages": {
+      "type": "array",
+      "description": "List of messages describing the error.",
+      "items": {
+        "type": "string",
+        "description": "Error description."
+      }
+    }
+  }
+}

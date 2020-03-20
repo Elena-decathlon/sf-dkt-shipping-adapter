@@ -1,0 +1,18 @@
+{
+  "request_id": "1111.111",
+  "provider_rates": [
+    {
+      "id": "FEDEX_2_DAY",
+      "service_level_identifier": "FEDEX_2_DAY",
+      "provider": "FEDEX",
+      "supported_routes": [
+        "*"
+      ],
+      "price": {
+        "source": "customization_provider",
+        "amount": 3.5,
+        "currency": "USD"
+      }
+    }
+  ]
+}

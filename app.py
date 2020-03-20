@@ -144,8 +144,12 @@ def get_shipping_offers(request_id):
 def post_provider_rates():
     print(f"REQUEST PROVIDER RATES {request.json}")
     if not request.json:
-        abort(400)
-
+        with open("provider_rates_400.json") as f:
+                data = json.load(f)
+        return(jsonify(data), 400)
+    with open("provider_rates_test.json") as f:
+            data = json.load(f)
+    return(jsonify(data), 201)
 
 
 ''' POST method / shipping offers'''
@@ -284,39 +288,39 @@ def post_shipments():
 
     ''' POST call to Shiphawk '''
 
-    url = 'https://sandbox.shiphawk.com/api/v4/shipments'
-    headers = {'X-Api-Key': API_KEY}
-    payload = {
-        "rate_id":"rate_5SNcd9293WRhPdNBgqPRN4KG",
-        "origin_address": {
-            "name": "Parcel Origin",
-            "company": "Example, Inc",
-            "street1": "465 Hillview Ave",
-            "street2": "Apt 5",
-            "zip": "93116"
-            },
-        "destination_address": {
-            "name": "Parcel Destination",
-            "company": "Example, Inc",
-            "street1": "925 De La Vina St",
-            "street2": "Suite 8",
-            "zip": "93101"
-            }
-        }
+#    url = 'https://sandbox.shiphawk.com/api/v4/shipments'
+#    headers = {'X-Api-Key': API_KEY}
+#    payload = {
+#        "rate_id":"rate_5SNcd9293WRhPdNBgqPRN4KG",
+#        "origin_address": {
+#            "name": "Parcel Origin",
+#            "company": "Example, Inc",
+#            "street1": "465 Hillview Ave",
+#            "street2": "Apt 5",
+#            "zip": "93116"
+#            },
+#        "destination_address": {
+#            "name": "Parcel Destination",
+#            "company": "Example, Inc",
+#            "street1": "925 De La Vina St",
+#            "street2": "Suite 8",
+#            "zip": "93101"
+#            }
+#        }
 
-    r = requests.post(url, headers=headers, json=payload)
+#    r = requests.post(url, headers=headers, json=payload)
 
 
 
 
 
     #print(f"POST SHIPMENT OPTION {shipment}")
-    print(f"POST SHIPMENT OPTION {r}")
-#    with open("shipment_test.json") as f:
-#        data = json.load(f)
-#        print(f"RESPOSE WITH SHIPMENT {data}")
-#    return(jsonify(data), 201)
-    return(jsonify(r), 201)
+#    print(f"POST SHIPMENT OPTION {r}")
+    with open("shipment_test.json") as f:
+        data = json.load(f)
+        print(f"RESPOSE WITH SHIPMENT {data}")
+    return(jsonify(data), 201)
+#    return(jsonify(r), 201)
 
 ''' DELETE method '''
 
