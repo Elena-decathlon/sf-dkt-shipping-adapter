@@ -6,10 +6,11 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, abort, make_response, request
 from flask_httpauth import HTTPTokenAuth
 
-# load_dotenv()
+load_dotenv()
 
 app = Flask(__name__)
 # app.secret_key = os.getenv("FLASK_SECRET_KEY")
+API_KEY = os.getenv("API_KEY")
 
 ''' Test '''
 
@@ -138,6 +139,15 @@ def get_shipping_offers(request_id):
         abort(404)
     return(jsonify({"shipment": shipping_offer[0]}))
 
+''' POST method / provider rates'''
+@app.route('/api/v1/provider_rates', methods=['POST'])
+def post_provider_rates():
+    print(f"REQUEST PROVIDER RATES {request.json}")
+    if not request.json:
+        abort(400)
+
+
+
 ''' POST method / shipping offers'''
 
 
@@ -178,11 +188,11 @@ def post_shipping_offers():
 
     shipment_options.append(shipment_option)
     print(f"POST SHIPMENT OPTION {shipment_option}")
-    
+
     ''' POST call to Shiphawk '''
 
     url = 'https://sandbox.shiphawk.com/api/v4/rates'
-    headers = {'X-Api-Key': 'ff8d17e27fc4f27cd4108f1a0a848826'}
+    headers = {'X-Api-Key': API_KEY}
     payload = {
         "items": [
             {
@@ -203,6 +213,8 @@ def post_shipping_offers():
 #    with open("shipping_offers_free_shipping.json") as f:
 #        data = json.load(f)
 #        print(f"RESPONSE WITH SHIPPING OFFER: {data}")
+
+    print(f"RESPONSE WITH SHIPPING OFFER: {r}")
     data = r.json()
     new_data = []
 
@@ -269,11 +281,42 @@ def post_shipments():
 #    with open("POST_request.json") as f:
 #        shipment_option = json.load(f)
     shipment_options.append(shipment)
-    print(f"POST SHIPMENT OPTION {shipment}")
-    with open("shipment_test.json") as f:
-        data = json.load(f)
-        print(f"RESPOSE WITH SHIPMENT {data}")
-    return(jsonify(data), 201)
+
+    ''' POST call to Shiphawk '''
+
+    url = 'https://sandbox.shiphawk.com/api/v4/shipments'
+    headers = {'X-Api-Key': API_KEY}
+    payload = {
+        "rate_id":"rate_5SNcd9293WRhPdNBgqPRN4KG",
+        "origin_address": {
+            "name": "Parcel Origin",
+            "company": "Example, Inc",
+            "street1": "465 Hillview Ave",
+            "street2": "Apt 5",
+            "zip": "93116"
+            },
+        "destination_address": {
+            "name": "Parcel Destination",
+            "company": "Example, Inc",
+            "street1": "925 De La Vina St",
+            "street2": "Suite 8",
+            "zip": "93101"
+            }
+        }
+
+    r = requests.post(url, headers=headers, json=payload)
+
+
+
+
+
+    #print(f"POST SHIPMENT OPTION {shipment}")
+    print(f"POST SHIPMENT OPTION {r}")
+#    with open("shipment_test.json") as f:
+#        data = json.load(f)
+#        print(f"RESPOSE WITH SHIPMENT {data}")
+#    return(jsonify(data), 201)
+    return(jsonify(r), 201)
 
 ''' DELETE method '''
 
