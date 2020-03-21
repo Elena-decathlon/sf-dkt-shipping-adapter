@@ -1,10 +1,10 @@
 {
 	"tracking_code": "DKTUSA",
-    	"label_url": "",
-	"tracking_url": "",
-    	"return_tracking_code": "",
-    	"return_label_url": "",
-    	"return_tracking_url": "",
+    	"label_url": "https://www.label_url.com/label1",
+	"tracking_url": "https://www.tracking_url.com/label1",
+    	"return_tracking_code": "https://www.return_tracking_url.com/label1",
+    	"return_label_url": "https://www.return_label_url.com/label1",
+    	"return_tracking_url": "https://www.return_tracking_url.com/label1",
     	"cost": {
         	    "price": 0.00,
     	            "currency": "USD"
