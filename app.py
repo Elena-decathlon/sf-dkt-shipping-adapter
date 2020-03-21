@@ -193,69 +193,66 @@ def post_shipping_offers():
     shipment_options.append(shipment_option)
     print(f"POST SHIPMENT OPTION {shipment_option}")
 
-    ''' POST call to Shiphawk '''
+#    ''' POST call to Shiphawk '''
 
-    url = 'https://sandbox.shiphawk.com/api/v4/rates'
-    headers = {'X-Api-Key': API_KEY}
-    payload = {
-        "items": [
-            {
-                "type": "parcel",
-                "length": length,
-                "width" : width,
-                "height": height,
-                "weight": weight,
-                "value": value
-                }
-            ],
-        "origin_address":{ "zip": zip_o},
-        "destination_address": {"zip": zip_dd}
-        }
-    r = requests.post(url, headers=headers, json=payload)
+#    url = 'https://sandbox.shiphawk.com/api/v4/rates'
+#    headers = {'X-Api-Key': API_KEY}
+#    payload = {
+#        "items": [
+#            {
+#                "type": "parcel",
+#                "length": length,
+#                "height": height,
+#                "weight": weight,
+#                "value": value
+#                }
+#            ],
+#        "origin_address":{ "zip": zip_o},
+#   r = requests.post(url, headers=headers, json=payload)
 
 
-#    with open("shipping_offers_free_shipping.json") as f:
-#        data = json.load(f)
-#        print(f"RESPONSE WITH SHIPPING OFFER: {data}")
+    with open("shipping_offers_free_shipping.json") as f:
+        data = json.load(f)
+        print(f"RESPONSE WITH SHIPPING OFFER: {data}")
 
-    print(f"RESPONSE WITH SHIPPING OFFER: {r}")
-    data = r.json()
-    new_data = []
+#    print(f"RESPONSE WITH SHIPPING OFFER: {r}")
+#    data = r.json()
+#    new_data = []
 
-    '''retrieving shipping offer details from POST call to Shiphawk'''
+#    '''retrieving shipping offer details from POST call to Shiphawk'''
 
-    rates = data['rates']
-    for d in rates:
-        offer = d['id']
-        provider_rate = d['rates_provider']
-        service_level = d['service_level']
-        starts_at = d['est_delivery_date']
-        ends_at = d['est_delivery_date']
-        expires_at = d['est_delivery_date']
-        price = d['price']
-        currency = d['currency_code']
-        resp = {
-            "offer": offer,
-            "provider_rate": provider_rate,
-            "service_level": service_level,
-            "delivery_estimate":
-                {
-                "starts_at": starts_at,
-                "ends_at": ends_at,
-                "expires_at": expires_at
-                },
-            "quote":
-                {
-                "price": price,
-                "currency": currency
-                }
-            }
-        print(f"OFFER {resp}")
-        new_data.append(resp)
+#    rates = data['rates']
+#    for d in rates:
+#        offer = d['id']
+#        provider_rate = d['rates_provider']
+#        service_level = d['service_level']
+#        starts_at = d['est_delivery_date']
+#        ends_at = d['est_delivery_date']
+#        expires_at = d['est_delivery_date']
+#        price = d['price']
+#        currency = d['currency_code']
+#        resp = {
+#            "offer": offer,
+#            "provider_rate": provider_rate,
+#            "service_level": service_level,
+#            "delivery_estimate":
+#                {
+#                "starts_at": starts_at,
+#                "ends_at": ends_at,
+#                "expires_at": expires_at
+#                },
+#            "quote":
+#                "price": price,
+#                "currency": currency
+#                }
+#            }
+#        print(f"OFFER {resp}")
+#        new_data.append(resp)
 
-    print(f"NEW DATA {new_data}")
-    print(f"RESPONSE WITH SHIPPING OFFER: {data}")
-    return(jsonify(new_data), 201)
+#    print(f"NEW DATA {new_data}")
+#    print(f"RESPONSE WITH SHIPPING OFFER: {data}")
+#    return(jsonify(new_data), 201)
+    return(jsonify(data), 201)
 
 ''' POST method / shipments'''
 
