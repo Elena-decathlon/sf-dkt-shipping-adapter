@@ -1,10 +1,10 @@
 {
-	"tracking_code": "DKTUSA",
-    	"label_url": "https://shiphawk.com/app/dashboard",
-	"tracking_url": "https://shiphawk.com/app/dashboard",
-    	"return_tracking_code": "https://shiphawk.com/app/dashboard",
-    	"return_label_url": "https://shiphawk.com/app/dashboard",
-    	"return_tracking_url": "https://shiphawk.com/app/dashboard",
+	"tracking_code": "DKTKTKT001",
+    	"label_url": "https://fakelabel.com/label1",
+	"tracking_url": "https://faketracking.com/tracking1",
+    	"return_tracking_code": "DKTRETURN001",
+    	"return_label_url": "https://fakereturnlabel.com/return1",
+    	"return_tracking_url": "https://fakereturntrackingurl.com/return1",
     	"cost": {
         	    "price": 0.00,
     	            "currency": "USD"
