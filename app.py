@@ -1,3 +1,6 @@
+import datetime
+from datetime import timedelta
+
 import json
 import os
 import requests
@@ -139,7 +142,9 @@ def get_shipping_offers(request_id):
         abort(404)
     return(jsonify({"shipment": shipping_offer[0]}))
 
-''' POST method / provider rates'''
+''' POST method / provider rates '''
+
+
 @app.route('/api/v1/provider_rates', methods=['POST'])
 def post_provider_rates():
     print(f"REQUEST PROVIDER RATES {request.json}")
@@ -211,9 +216,31 @@ def post_shipping_offers():
 #   r = requests.post(url, headers=headers, json=payload)
 
 
-    with open("shipping_offers_free_shipping.json") as f:
-        data = json.load(f)
-        print(f"RESPONSE WITH SHIPPING OFFER: {data}")
+    starts_at = str(datetime.datetime.utcnow() + timedelta(days = 6))
+    ends_at = str(datetime.datetime.utcnow() + timedelta(days = 7))
+    expires_at = str(datetime.datetime.utcnow() + timedelta(hours = 2))
+
+    data = [
+        {
+            "offer": "DKT001",
+            "provider_rate": "FREE_SHIPPING",
+            "service_level": "FREE_SHIPPING",
+            "delivery_estimate": {
+                "starts_at": starts_at,
+                "ends_at": ends_at,
+                "expires_at": expires_at
+                },
+            "quote": {
+                "price": 0.00,
+                "currency": "USD"
+                }
+            }
+        ]
+    
+    #with open("shipping_offers_free_shipping.json") as f:
+    #    data = json.load(f)
+    #    print(f"RESPONSE WITH SHIPPING OFFER: {data}")
+    print(f"RESPONSE WITH SHIPPING OFFER: {data}")
 
 #    print(f"RESPONSE WITH SHIPPING OFFER: {r}")
 #    data = r.json()
